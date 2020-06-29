@@ -59,9 +59,9 @@ const MapContainer = ({ google }) => {
       setE(false);
       const s = markers.find(
         ({ address, description, title }) =>
-          address.toLowerCase().includes(searchText) ||
-          description.toLowerCase().includes(searchText) ||
-          title.toLowerCase().includes(searchText)
+          address.toLowerCase().includes(searchText.toLowerCase()) ||
+          description.toLowerCase().includes(searchText.toLowerCase()) ||
+          title.toLowerCase().includes(searchText.toLowerCase())
       );
 
       if (!!s) {

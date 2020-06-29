@@ -114,9 +114,10 @@ const CreateAd = () => {
   const [hideList, setHideList] = useState(false);
   const history = useHistory();
 
-  const handleSelect = ({ description }) => () => {
-    setValue(description, false);
+  const handleSelect = (d) => () => {
+    setValue(d.description, false);
     setHideList(true);
+    console.log(d)
   };
 
   const renderSuggestions = () =>
@@ -133,22 +134,22 @@ const CreateAd = () => {
     getGeocode({ address: value })
       .then((results) => getLatLng(results[0]))
       .then(({ lat, lng }) => {
-        console.log("📍 Coordinates: ", { lat, lng });
-        localStorage.setItem(
-          "mapData",
-          JSON.stringify([
-            ...mapData,
-            {
-              address: value,
-              title,
-              description,
-              lat,
-              lng,
-            },
-          ])
-        );
-        window.alert("Added successfully");
-        history.push("/");
+        // console.log("📍 Coordinates: ", { lat, lng });
+        // localStorage.setItem(
+        //   "mapData",
+        //   JSON.stringify([
+        //     ...mapData,
+        //     {
+        //       address: value,
+        //       title,
+        //       description,
+        //       lat,
+        //       lng,
+        //     },
+        //   ])
+        // );
+        // window.alert("Added successfully");
+        // history.push("/");
       })
       .catch((error) => {
         window.alert(`An error occurred: ${error}`);
