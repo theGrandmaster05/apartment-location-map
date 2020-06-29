@@ -1,25 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { createGlobalStyle } from "styled-components";
+import { normalize } from "polished";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+import Map from "./pages/map";
+import CreateAd from "./pages/create-ad";
+
+const GlobalStyles = createGlobalStyle`
+  ${normalize()};
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path={"/"} component={Map} />
+        <Route path={"/create"} component={CreateAd} />
+      </Switch>
+      <GlobalStyles />
+    </Router>
   );
 }
 
