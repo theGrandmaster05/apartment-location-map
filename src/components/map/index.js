@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
 import styled from "styled-components";
@@ -90,7 +91,9 @@ const MapContainer = ({ google }) => {
           />
           {!!Object.entries(option).length && !!searchText && (
             <ul>
-              {!hide && <li onClick={changeLocation}>{option.address}</li>}
+              {!hide && !e && (
+                <li onClick={changeLocation}>{option.address}</li>
+              )}
             </ul>
           )}
         </form>
