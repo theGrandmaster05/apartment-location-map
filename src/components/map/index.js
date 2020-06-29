@@ -52,6 +52,7 @@ const MapContainer = ({ google }) => {
       : { lat: 47.444, lng: -122.176 }
   );
   const [hide, setHide] = useState(true);
+  const [zoom, setZoom] = useState(14);
 
   useEffect(() => {
     if (!!searchText) {
@@ -75,6 +76,7 @@ const MapContainer = ({ google }) => {
   const changeLocation = () => {
     setCenter({ lat: option.lat, lng: option.lng });
     setSearchText(option.address);
+    setZoom(20);
     setHide(true);
   };
 
@@ -100,7 +102,7 @@ const MapContainer = ({ google }) => {
       </FASContainer>
       <Map
         google={google}
-        zoom={14}
+        zoom={zoom}
         initialCenter={
           !!markers.length
             ? { lat: markers[0].lat, lng: markers[0].lng }
