@@ -134,22 +134,22 @@ const CreateAd = () => {
     getGeocode({ address: value })
       .then((results) => getLatLng(results[0]))
       .then(({ lat, lng }) => {
-        // console.log("📍 Coordinates: ", { lat, lng });
-        // localStorage.setItem(
-        //   "mapData",
-        //   JSON.stringify([
-        //     ...mapData,
-        //     {
-        //       address: value,
-        //       title,
-        //       description,
-        //       lat,
-        //       lng,
-        //     },
-        //   ])
-        // );
-        // window.alert("Added successfully");
-        // history.push("/");
+        console.log("📍 Coordinates: ", { lat, lng });
+        localStorage.setItem(
+          "mapData",
+          JSON.stringify([
+            ...mapData,
+            {
+              address: value,
+              title,
+              description,
+              lat,
+              lng,
+            },
+          ])
+        );
+        window.alert("Added successfully");
+        history.push("/");
       })
       .catch((error) => {
         window.alert(`An error occurred: ${error}`);
