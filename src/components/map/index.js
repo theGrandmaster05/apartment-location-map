@@ -2,6 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
 import styled from "styled-components";
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+} from "use-places-autocomplete";
 
 const FASContainer = styled.div`
   display: flex;
@@ -43,7 +47,11 @@ const MapContainer = ({ google }) => {
   const [markers] = useState(
     () => JSON.parse(localStorage.getItem("mapData")) || []
   );
-  const [searchText, setSearchText] = useState("");
+  const {
+    value: searchText,
+    suggestions: { status, data },
+    setValue: setSearchText,
+  } = usePlacesAutocomplete();
   const [option, setOption] = useState({});
   const [e, setE] = useState(false);
   const [center, setCenter] = useState(() =>
@@ -58,6 +66,7 @@ const MapContainer = ({ google }) => {
     if (!!searchText) {
       setHide(false);
       setE(false);
+
       const s = markers.find(
         ({ address, description, title }) =>
           address.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -80,6 +89,28 @@ const MapContainer = ({ google }) => {
     setHide(true);
   };
 
+  const handleSelect = (d) => {
+    setSearchText(d.description, false);
+    setHide(true);
+
+    getGeocode({ address: searchText })
+      .then((results) => getLatLng(results[0]))
+      .then(({ lat, lng }) => {
+        setCenter({ lat, lng });
+        setZoom(20);
+      })
+      .catch((error) => {
+        window.alert(`An error occurred: ${error}`);
+      });
+  };
+
+  const renderSuggestions = () =>
+    data.map((suggestion) => (
+      <li key={suggestion.id} onClick={() => handleSelect(suggestion)}>
+        {suggestion.description}
+      </li>
+    ));
+
   return (
     <>
       <FASContainer>
@@ -96,6 +127,7 @@ const MapContainer = ({ google }) => {
               {!hide && !e && (
                 <li onClick={changeLocation}>{option.address}</li>
               )}
+              {status === "OK" && !hide && renderSuggestions()}
             </ul>
           )}
         </form>

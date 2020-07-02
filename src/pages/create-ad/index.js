@@ -117,7 +117,6 @@ const CreateAd = () => {
   const handleSelect = (d) => () => {
     setValue(d.description, false);
     setHideList(true);
-    console.log(d)
   };
 
   const renderSuggestions = () =>
